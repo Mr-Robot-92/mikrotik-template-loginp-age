@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Télécharger Template - Fsociety</title>
+<style>
+  * {margin:0; padding:0; box-sizing:border-box;}
+  body {font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); min-height:100vh; padding:20px;}
+  .container {max-width:1000px; margin:auto; text-align:center; color:#fff;}
+  h1 {font-size:32px; margin-bottom:20px;}
+  .grid {display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:15px; margin-bottom:30px;}
+  .card {background:#fff; color:#333; border-radius:15px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.2); display:flex; flex-direction:column; cursor:pointer; transition:0.3s;}
+  .card:hover {transform:scale(1.05);}
+  .card img {width:100%; height:180px; object-fit:cover;}
+  .card h3 {margin:10px 0 5px 0; font-size:18px;}
+  .card p {font-size:14px; margin:0 10px 10px; line-height:1.3;}
+  .step, .info-box, .progress-bar, .checkmark, #finalBtn {display:none;}
+  .info-box {background:#f8f9fa; color:#333; padding:15px; border-left:4px solid #667eea; margin-bottom:20px; border-radius:5px; text-align:left;}
+  .step {background:#fff3cd; border:2px solid #ffc107; padding:20px; border-radius:10px; margin:20px 0;}
+  .btn {padding:12px 30px; border:none; border-radius:50px; font-weight:bold; cursor:pointer; margin-top:10px;}
+  .btn-primary {background:linear-gradient(135deg,#667eea 0%,#764ba2 100%); color:#fff;}
+  .btn-primary:hover {opacity:0.9;}
+  .progress-bar {width:100%; height:10px; background:#e9ecef; border-radius:10px; overflow:hidden; margin:20px 0;}
+  .progress-fill {height:100%; background:linear-gradient(90deg,#667eea 0%,#764ba2 100%); width:0%; transition:width 0.3s;}
+  .checkmark {font-size:80px; color:#28a745; animation:scaleIn 0.5s;}
+  @keyframes scaleIn {from {transform:scale(0);} to {transform:scale(1);}}
+  footer {margin-top:30px; color:#fff; font-size:13px;}
+  footer a {color:#fff; text-decoration:underline;}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>📦 Sélectionnez un Template</h1>
+
+  <div class="grid" id="templateGrid">
+    <!-- Les templates seront générés par JS -->
+  </div>
+
+  <div class="info-box" id="infoBox">
+    ⚡ <strong>Téléchargement en 2 étapes</strong><br>
+    Pour soutenir notre travail, merci de suivre les 2 étapes ci-dessous.
+  </div>
+
+  <div class="step" id="step1">
+    <h3>📋 Étape 1/2</h3>
+    <p>Cliquez sur le bouton pour passer la première étape</p>
+    <button class="btn btn-primary" onclick="step1()">▶️ Commencer (1/2)</button>
+  </div>
+
+  <div class="step" id="step2">
+    <h3>⬇️ Étape 2/2</h3>
+    <p>Dernière étape ! Cliquez pour télécharger votre template</p>
+    <button class="btn btn-primary" onclick="step2()">⬇️ Télécharger (2/2)</button>
+  </div>
+
+  <div class="progress-bar" id="progressBar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <div class="checkmark" id="checkmark">✅</div>
+
+  <button class="btn btn-primary" id="finalBtn">✅ Téléchargement terminé !</button>
+
+  <footer>
+    📧 Contact: <a href="mailto:lafsociety2@gmail.com">Email</a> | 
+    <a href="https://t.me/fsociety92k" target="_blank">Telegram</a>
+  </footer>
+</div>
+
+<script>
+const templates = {
+  '1': {name:'Template Basic Violet 💜', img:'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg3tcTBDI-fuRNPJB4gMkOMbNA-wl_WEYwjxEkTkPtuOB96GE8Ao1_3LcE8ngFycFv8_rfhoi0H7fPwoABK53m2BqVbV8ajUCchziX56GtyePXI4Jeu3TMzNu_wR_XsMzoAc2QXMgt1VZKKX_k2o9Yfm6_5172D6KARdTLlfLN5mMvKdMYhUFuNbRRWt_Q/s320/Fsociety%20basic%20violet.png', intermediateUrl:'https://www.revenuecpmgate.com/hff1n29h?key=6f4fa414d0be1d5101662c7a116d0756', directUrl:'https://dgdrive.site/7a8ruqr9819f'},
+  '2': {name:'Template Gamer 🎮', img:'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg6iXsbi_Q1jdUA4WLPGkDJQwVmgSV2rzR5JBQPyp8fPz_pJJAhiNHSAjDn6VE0QvNLdacaVxdxb-dRa4c6lcqtPz0Q8b5PbW089FD0EEmQ7opdP6DGmiwBDaVEj33SKj8ilRezjO_0izxZNJ2DXtNucHRdKqdbLLEmVswqbGn4-iy6X_QFpVhLgBWxN9Y/s320/fs4%20gamer.png', intermediateUrl:'https://www.revenuecpmgate.com/hff1n29h?key=2', directUrl:'https://dgdrive.site/sxs52n1os524'},
+  '3': {name:'Template E-commerce 💳', img:'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiAHep2Gr6nCZy7KVGL8Pv6_S393kfzJdTcNb_pMLayWAinHFMz2FnJkcDyjJBCYqbShHYS598Ge9Y2kr1_6DbSoFXW1RzSInwTz67uy0j5LtaPGTHkTDoC0nkL3e3TA7oN5L-Bhh831GPkGV5Z2y9jqNdUzOksYc-YtmBSqI43KGwzSU8_LQfO29ynCrU/s320/Fsociety%20payement%20en%20ligne%20t%20f.png', intermediateUrl:'https://www.revenuecpmgate.com/hff1n29h?key=6f4fa414d0be1d5101662c7a116d0756', directUrl:'https://dgdrive.site/3engvn00jq9z'},
+  <!--'4': {name:'Template Modern 🔥', img:'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgNQH5m0mP0e7rI0_P4M6x5o5rK4sKMd6Z7uUoZx1R1nX-s8yTIc1eXoL2Z0lkg0mQ4m9XkQom0yB3ksqT7n2dR-XYZ/s320/template4.png', intermediateUrl:'https://www.revenuecpmgate.com/hff1n29h?key=6f4fa414d0be1d5101662c7a116d0756', directUrl:'https://dgdrive.site/template4'},
+  <!--'5': {name:'Template Portfolio 🖌️', img:'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgD4k5XYT6L7pQ8N5m7aA3k9H4uHkG8L5v2W6YxT8P0rXy/s320/template5.png', intermediateUrl:'https://www.revenuecpmgate.com/hff1n29h?key=6f4fa414d0be1d5101662c7a116d0756', directUrl:'https://dgdrive.site/template5'}
+};
+
+let currentTemplateId = null;
+
+// Génération de la grille
+const grid = document.getElementById('templateGrid');
+for(const id in templates){
+  const t = templates[id];
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <img src="${t.img}" alt="${t.name}">
+    <h3>${t.name}</h3>
+    <p>Cliquez pour sélectionner ce template</p>
+  `;
+  card.onclick = () => selectTemplate(id);
+  grid.appendChild(card);
+}
+
+function selectTemplate(id){
+  currentTemplateId = id;
+  document.getElementById('infoBox').style.display='block';
+  document.getElementById('step1').style.display='block';
+  document.getElementById('step2').style.display='none';
+  document.getElementById('progressBar').style.display='none';
+  document.getElementById('checkmark').style.display='none';
+  document.getElementById('finalBtn').style.display='none';
+}
+
+// Étape 1
+function step1(){
+  if(!currentTemplateId) return alert('Veuillez sélectionner un template.');
+  window.open(templates[currentTemplateId].intermediateUrl,'_blank');
+  document.getElementById('step1').style.display='none';
+  document.getElementById('step2').style.display='block';
+  document.getElementById('progressBar').style.display='block';
+  document.getElementById('progressFill').style.width='50%';
+}
+
+// Étape 2
+function step2(){
+  window.open(templates[currentTemplateId].directUrl,'_blank');
+  document.getElementById('step2').style.display='none';
+  document.getElementById('progressFill').style.width='100%';
+  setTimeout(()=>{
+    document.getElementById('progressBar').style.display='none';
+    document.getElementById('checkmark').style.display='block';
+    document.getElementById('finalBtn').style.display='inline-block';
+  },500);
+}
+</script>
+</body>
+</html>
